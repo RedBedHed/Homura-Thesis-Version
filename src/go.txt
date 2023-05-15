@@ -1,0 +1,27 @@
+go movetime 1000
+go movetime 1000
+go movetime 1000
+go movetime 1000
+go movetime 1000
+go movetime 1000
+go movetime 1000
+go movetime 1000
+go movetime 1000
+go movetime 1000
+go movetime 1000
+ucinewgame
+go movetime 1000
+go movetime 1000
+go movetime 1000
+go movetime 1000
+go movetime 1000
+go movetime 1000
+go movetime 1000
+go movetime 1000
+go movetime 1000
+go movetime 1000
+go movetime 1000
+go movetime 1000
+go movetime 1000
+go movetime 1000
+quit
