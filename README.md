@@ -102,7 +102,7 @@ Homura's search is nearly single-threaded, relying on only one extra thread for 
 ### // *Base Search* //
 - Iterative Deepening
 - PVS with PV-nodes searched by [rollout](https://github.com/RedBedHed/Homura/blob/main/src/Rollout.cpp)
-- Non-PV-nodes searched with [backtracking](https://github.com/RedBedHed/Homura/blob/main/srcBacktrack.cpp)
+- Non-PV-nodes searched with [backtracking](https://github.com/RedBedHed/Homura/blob/main/src/Backtrack.cpp)
 - Internal Iterative Deepening by backtracking
 - Quiescence Search
 - Transposition table with two buckets and clock-based aging
