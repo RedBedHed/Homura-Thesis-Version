@@ -26,7 +26,7 @@
 
 ## Introduction
 
-Homura is a Chess Engine that I wrote from 2022-2023 as a branch of my move generator, Charon. As a full-time student (16 credit hours a semester), I made progress whenever and wherever I could&mdash; in campus libraries, coffee shops, on the bus, in bed. I read many papers and found inspiration in many engines, including Stockfish, Leela, Drofa, Scorpio, Fruit, CPW-Engine, Blunder, and Leorik. Homura derives from some of the ideas used in these engines&mdash; most notably Blunder and Leorik.
+Homura is a Chess Engine that I wrote from 2022-2023 as a branch of my move generator, Charon. As a full-time student (16 credit hours a semester), I made progress whenever and wherever I could&mdash; in campus libraries, coffee shops, on the bus, in bed. I read many papers and found inspiration in many engines, including Stockfish, Leela, Drofa, Scorpio, Fruit, CPW-Engine, PeSTO, Blunder, and Leorik. Homura derives from some of the ideas used in these engines&mdash; most notably PeSTO, Blunder, and Leorik.
 
 ## Strength
 It is hard to say exactly how strong Homura is, as I ran out of time to implement the full UCI interface, and Homura only recognizes "movetime" or "infinite" time controls. After playing many games with Leorik-1.0 and Leorik-2.0, I believe that the elo might be somewhere between 2300 and 2550 at blitz chess. I also had the great privilege to intermediate a game between Homura and one of the top human players at my university. I am thrilled to be able to say that we won that game.
