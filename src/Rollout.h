@@ -602,13 +602,13 @@ namespace Homura {
     /**
      * Homura's main search function.
      * 
-     * <p>
+     * <summary>
      * This function implements a rollout-based
      * principal variation search where all PV
      * nodes are searched by rollout, and the 
      * remaining nodes are searched via backtracking
      * with a null window.
-     * </p>
+     * </summary>
      * 
      * @return the best move
      */
