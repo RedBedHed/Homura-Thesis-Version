@@ -180,9 +180,8 @@ namespace lexer {
          * <p>
          * This function will parse the
          * lexical specification and transform
-         * it into a list of Regular Expression
-         * Graphs (Non-deterministic Finite
-         * Automata).
+         * it into a list of Non-deterministic 
+         * Finite Automata.
          * </p>
          *
          * <p>
