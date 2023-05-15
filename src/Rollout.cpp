@@ -975,9 +975,9 @@ namespace Homura {
     *** </p>
     ***
     *** <p>
-    *** Upon reaching its maximum depth, Homura performs 
-    *** simulation by evaluating with backtracking quiescence 
-    *** search.
+    *** Upon reaching its maximum depth durin a rollout, Homura 
+    *** performs simulation by evaluating with backtracking 
+    *** quiescence search.
     *** </p>
     *** </summary>
     ***
