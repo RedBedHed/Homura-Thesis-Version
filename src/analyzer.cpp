@@ -37,14 +37,14 @@ namespace lexer {
         // Do the work.
         // First parse
         // and compile
-        // the REGs.
+        // the NFAs.
         PARSE();
 
         // // Next,
         // // loadSpec the
         // // source file
         // // using the
-        // // list of REGs.
+        // // list of NFAs.
         // ANALYZE(s);
     }
 
@@ -63,7 +63,7 @@ namespace lexer {
             // Parse the REGEX
             // portion of the
             // expression and
-            // add its REG to
+            // add its NFA to
             // the regs list.
             regs.push_back(A());
 
@@ -110,10 +110,10 @@ namespace lexer {
         .emplace_back("ERROR");
     }
 
-    REG Analyzer::E() {
+    NFA Analyzer::E() {
 
         // Parse D first.
-        REG g = D();
+        NFA g = D();
 
         do {
 
@@ -126,7 +126,7 @@ namespace lexer {
             // union
             // operator,
             // return the
-            // passed REG.
+            // passed NFA.
             if(c != '|')
                 return g;
 
@@ -144,10 +144,10 @@ namespace lexer {
         } while(true);
     }
 
-    inline REG Analyzer::D() {
+    inline NFA Analyzer::D() {
 
         // Parse P first.
-        REG g = P();
+        NFA g = P();
 
         do {
 
@@ -162,7 +162,7 @@ namespace lexer {
             // we have nothing
             // to concatenate.
             // return
-            // the passed REG.
+            // the passed NFA.
             if(c == '|' ||
                c == ')' ||
                c == '#')
@@ -231,10 +231,10 @@ namespace lexer {
         return '\0';
     }
 
-    inline REG Analyzer::A() {
+    inline NFA Analyzer::A() {
 
-        // Fire up a REG.
-        REG g;
+        // Fire up a NFA.
+        NFA g;
 
         // Peek at the
         // next char.
@@ -277,7 +277,7 @@ namespace lexer {
         expect('#');
 
         // return the
-        // REG by value.
+        // NFA by value.
         // don't worry
         // about the
         // trivial copying.
@@ -349,7 +349,7 @@ namespace lexer {
         return s;
     }
 
-    inline REG Analyzer::Z() {
+    inline NFA Analyzer::Z() {
 
         // Pop the next
         // char.
@@ -362,8 +362,8 @@ namespace lexer {
             );
 
         // Fire up a
-        // REG.
-        REG x;
+        // NFA.
+        NFA x;
 
         // If the
         // current
@@ -389,11 +389,11 @@ namespace lexer {
         char z = c;
 
         // Make a
-        // REG that
+        // NFA that
         // recognizes
         // the current
         // char.
-        x = trivialREG(c);
+        x = trivialNFA(c);
         do {
 
             // Pop the next
@@ -420,7 +420,7 @@ namespace lexer {
             // we are done.
             if (c == ']')
                 return uni(x,
-                    trivialREG<'-'>()
+                    trivialNFA<'-'>()
                 );
 
             // If the
@@ -462,7 +462,7 @@ namespace lexer {
             // Union the range.
             do {
                 x = uni(x,
-                    trivialREG(++z)
+                    trivialNFA(++z)
                 );
             } while (z < c);
 
@@ -500,29 +500,29 @@ namespace lexer {
                 );
 
             // Make a
-            // REG that
+            // NFA that
             // recognizes
             // the current
             // char and
             // union it
             // with the
-            // previous REG.
+            // previous NFA.
             // store the
-            // resulting REG
+            // resulting NFA
             // in x. Update
             // z.
             z = c;
             x = uni(x,
-                trivialREG(c)
+                trivialNFA(c)
             );
         } while(true);
         return x;
     }
 
-    inline REG Analyzer::P() {
+    inline NFA Analyzer::P() {
 
-        // Fire up a REG.
-        REG x;
+        // Fire up a NFA.
+        NFA x;
 
         // Pop the next
         // char.
@@ -561,16 +561,16 @@ namespace lexer {
             // current
             // char is a
             // dot, make
-            // a REG that
+            // a NFA that
             // recognizes
             // ASCII - {'\0'}.
             case '.':
             {
                 int i = 2;
-                x = trivialREG<1>();
+                x = trivialNFA<1>();
                 do {
                     x = uni(x,
-                    trivialREG(
+                    trivialNFA(
                        (char) i
                     ));
                 } while(++i < 256);
@@ -615,13 +615,13 @@ namespace lexer {
             // current
             // char is not
             // an operator
-            // make a REG
+            // make a NFA
             // that
             // recognizes it.
             default:
                 if (c == '\\')
                     c = ESC(pop());
-                x = trivialREG(c);
+                x = trivialNFA(c);
         }
 
         // Peek at the next
@@ -629,33 +629,33 @@ namespace lexer {
         switch(peek()) {
 
             // If plus,
-            // return a  REG
+            // return a  NFA
             // recognizing
             // the kleene
             // plus of the
-            // current REG.
+            // current NFA.
             case '+':
                 pass();
                 return plus(x);
 
             // If question mark,
-            // return a REG
+            // return a NFA
             // recognizing the
             // union of the
-            // current REG
+            // current NFA
             // with the epsilon
-            // REG.
+            // NFA.
             case '?':
                 pass();
                 return
                     question(x);
 
             // If star,
-            // return a REG
+            // return a NFA
             // recognizing
             // the kleene
             // star of the
-            // current REG.
+            // current NFA.
             case '*':
                 pass();
                 return
@@ -664,7 +664,7 @@ namespace lexer {
             // If no
             // quantifier,
             // return the
-            // current REG.
+            // current NFA.
             default:
                 return x;
         }
@@ -686,7 +686,7 @@ namespace lexer {
 
     inline void Analyzer::SETUP() {
 
-        // Iterate through the REGs.
+        // Iterate through the NFAs.
         for(size_t i = 0;
             i < regs.size(); ++i) {
 
@@ -840,7 +840,7 @@ namespace lexer {
         // least one outgoing
         // non-epsilon transition
         // or the final state of
-        // the entire REG.
+        // the entire NFA.
         do {
             x = s.top(); s.pop();
             if (x->split) {
@@ -883,13 +883,13 @@ namespace lexer {
         // If the potential
         // match has no path
         // to the final state
-        // of the REG, we will
+        // of the NFA, we will
         // discard these characters
-        // and try the next REG.
+        // and try the next NFA.
         queue<char> queue;
 
         // Check the source against
-        // each REG.
+        // each NFA.
         for(size_t i = 0;
             i < tokenCount; ++i) {
 
@@ -910,13 +910,13 @@ namespace lexer {
             // Get a pointer to the
             // epsilon closure set
             // of the initial state
-            // of the ith REG.
+            // of the ith NFA.
             shared_ptr<NodeSet>
                 k = nsv[i];
 
             // Get a pointer to the
             // final state of the
-            // ith REG.
+            // ith NFA.
             const shared_ptr<Node>
                 a = regs[i].accept;
 
@@ -1073,9 +1073,9 @@ namespace lexer {
         exit(0);
     }
 
-    inline REG Analyzer::
-    trivialREG(const char c) {
-        REG r;
+    inline NFA Analyzer::
+    trivialNFA(const char c) {
+        NFA r;
         r.start = make_shared<Node>();
         r.accept = make_shared<Node>();
         r.start->l_lab = c;
@@ -1084,9 +1084,9 @@ namespace lexer {
     }
 
     template<char C>
-    inline REG Analyzer::
-    trivialREG() {
-        REG r;
+    inline NFA Analyzer::
+    trivialNFA() {
+        NFA r;
         r.start = make_shared<Node>();
         r.accept = make_shared<Node>();
         r.start->l_lab = C;
@@ -1094,9 +1094,9 @@ namespace lexer {
         return r;
     }
 
-    inline REG Analyzer::
-    question(const REG& x) {
-        REG r;
+    inline NFA Analyzer::
+    question(const NFA& x) {
+        NFA r;
         r.start = make_shared<Node>();
         r.accept = make_shared<Node>();
         r.start->l = x.start;
@@ -1106,9 +1106,9 @@ namespace lexer {
         return r;
     }
 
-    inline REG Analyzer::
-    kleene(const REG& x) {
-        REG r;
+    inline NFA Analyzer::
+    kleene(const NFA& x) {
+        NFA r;
         r.start = make_shared<Node>();
         r.accept = make_shared<Node>();
         r.start->l = x.start;
@@ -1121,9 +1121,9 @@ namespace lexer {
         return r;
     }
 
-    inline REG Analyzer::
-    plus(const REG& x) {
-        REG r;
+    inline NFA Analyzer::
+    plus(const NFA& x) {
+        NFA r;
         r.start = make_shared<Node>();
         r.accept = make_shared<Node>();
         r.start->l = x.start;
@@ -1134,9 +1134,9 @@ namespace lexer {
         return r;
     }
 
-    inline REG Analyzer::
-    uni(const REG& x, const REG& y) {
-        REG r;
+    inline NFA Analyzer::
+    uni(const NFA& x, const NFA& y) {
+        NFA r;
         r.start = make_shared<Node>();
         r.accept = make_shared<Node>();
         r.start->l = x.start;
@@ -1147,9 +1147,9 @@ namespace lexer {
         return r;
     }
 
-    inline REG Analyzer::
-    cat(const REG& x, const REG& y) {
-        REG r;
+    inline NFA Analyzer::
+    cat(const NFA& x, const NFA& y) {
+        NFA r;
         r.start = x.start;
         r.accept = y.accept;
         x.accept->l = y.start;

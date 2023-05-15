@@ -40,7 +40,7 @@ namespace lexer {
 
     /**
      * A node is the basic unit
-     * of a REG which holds information
+     * of a NFA which holds information
      * about outgoing transitions along
      * with pointers to the next nodes,
      * if any.
@@ -53,13 +53,13 @@ namespace lexer {
     };
 
     /**
-     * A REG or Regular Expression
+     * A NFA or Regular Expression
      * Graph is a data structure
      * representing a simple (and
      * suboptimal) non-deterministic
      * finite automata.
      */
-    struct REG final {
+    struct NFA final {
         shared_ptr<Node>
             start = nullptr;
         shared_ptr<Node>
@@ -116,9 +116,9 @@ namespace lexer {
         vector<Token> output;
 
         /**
-         * A vector to hold the REGs
+         * A vector to hold the NFAs
          */
-        vector<REG> regs;
+        vector<NFA> regs;
 
         /**
          * A Vector to hold the tokens
@@ -152,7 +152,7 @@ namespace lexer {
          * This is a vector that holds
          * each Node Set representing
          * the epsilon closure of the
-         * start state of an REG (NFA),
+         * start state of an NFA (NFA),
          * associated loosely by index.
          */
         NodeSetVec nsv;
@@ -211,10 +211,10 @@ namespace lexer {
          * regular expression is valid before
          * parsing it.
          *
-         * @return The REG representation of
+         * @return The NFA representation of
          * the parsed regular expression.
          */
-        REG A();
+        NFA A();
 
         /**
          * The function O parses a Token.
@@ -227,13 +227,13 @@ namespace lexer {
         /**
          * The function Z parses a
          * union expression (shorthand,
-         * in quotes), returning a REG
+         * in quotes), returning a NFA
          * for an NFA that recognizes
          * the expression.
          *
-         * @return an REG
+         * @return an NFA
          */
-        REG Z();
+        NFA Z();
 
         /**
          * This function provides an
@@ -245,18 +245,18 @@ namespace lexer {
          * E and F work together to
          * parse a union expression.
          *
-         * @return an REG
+         * @return an NFA
          */
-        REG E();
+        NFA E();
 
         /**
          * A function to parse a
          * concatenation expression
          * in concert with Y.
          *
-         * @return an REG
+         * @return an NFA
          */
-        REG D();
+        NFA D();
 
         /**
          * A function to parse either
@@ -267,9 +267,9 @@ namespace lexer {
          * expression of higher
          * precedence.
          *
-         * @return an REG
+         * @return an NFA
          */
-        REG P();
+        NFA P();
 
         /**
          * A function to consume the
@@ -334,7 +334,7 @@ namespace lexer {
          *
          * <p>
          * This function simulates the list of
-         * REGs, calculating the epsilon closure
+         * NFAs, calculating the epsilon closure
          * of each state and traversing the states
          * in a set-wise manner.
          * </p>
@@ -366,64 +366,64 @@ namespace lexer {
 
         /**
          * A function to create a trivial
-         * REG that recognizes the given
+         * NFA that recognizes the given
          * character.
          *
-         * @return a REG
+         * @return a NFA
          */
-        static REG trivialREG(char);
+        static NFA trivialNFA(char);
         template<char>
-        static REG trivialREG();
+        static NFA trivialNFA();
 
         /**
-         * A function to create a REG
+         * A function to create a NFA
          * that recognizes zero or one
-         * of the given REG.
+         * of the given NFA.
          *
-         * @return a REG
+         * @return a NFA
          */
-        static REG question(const REG&);
+        static NFA question(const NFA&);
 
         /**
-         * A function to create a REG
+         * A function to create a NFA
          * that recognizes the kleene
-         * closure of the given REG.
+         * closure of the given NFA.
          *
-         * @return a REG
+         * @return a NFA
          */
-        REG kleene(const REG&);
+        NFA kleene(const NFA&);
 
         /**
-         * A function to create a REG
+         * A function to create a NFA
          * that recognizes the kleene
          * plus closure of the given
-         * REG.
+         * NFA.
          *
-         * @return a REG
+         * @return a NFA
          */
-        REG plus(const REG&);
+        NFA plus(const NFA&);
 
         /**
-         * A function to create a REG
+         * A function to create a NFA
          * that recognizes the union
-         * of the given two REGs.
+         * of the given two NFAs.
          *
-         * @return an REG
+         * @return an NFA
          */
-        static REG uni(const REG&, const REG&);
+        static NFA uni(const NFA&, const NFA&);
 
         /**
-         * A function to create a REG that
+         * A function to create a NFA that
          * recognizes the concatenation of
-         * the two given REGs
+         * the two given NFAs
          *
-         * @return an REG
+         * @return an NFA
          */
-        static REG cat(const REG&, const REG&);
+        static NFA cat(const NFA&, const NFA&);
 
         /**
          * A function to find the epsilon
-         * closure of the given REG Node,
+         * closure of the given NFA Node,
          * populating the given set.
          */
         static void closeEpsilon(
