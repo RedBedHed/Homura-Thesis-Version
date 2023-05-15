@@ -17,9 +17,11 @@
 2. [Strength](https://github.com/RedBedHed/Homura/tree/main#strength)
 3. [Search](https://github.com/RedBedHed/Homura/tree/main#search)
 4. [Experimentation](https://github.com/RedBedHed/Homura/tree/main#experimentation-with-classical-mcts)
-5. [Algorithm 4](https://github.com/RedBedHed/Homura/tree/main#algorithm-4-by-dr-huang)
+5. [Rollout Alpha-Beta](https://github.com/RedBedHed/Homura/tree/main#algorithm-4-by-dr-huang)
 6. [Search Techniques](https://github.com/RedBedHed/Homura/tree/main#search-techniques)
 7. [Move Generation](https://github.com/RedBedHed/Homura/tree/main#move-generation)
+8. [UCI](https://github.com/RedBedHed/Homura/tree/main#uci)
+9. []
 
 ## Introduction
 
