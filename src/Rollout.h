@@ -250,6 +250,11 @@ namespace Homura {
         flags(NOT)
         { }
 
+        constexpr Node(Node&&) = delete;
+        constexpr Node(const Node&) = delete;
+        constexpr Node& operator=(const Node&&) = delete;
+        constexpr Node& operator=(const Node&) = delete;
+
         /**
          * A method to set the score of this 
          * node, along with bounds V- and V+,
