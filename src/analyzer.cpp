@@ -706,8 +706,7 @@ namespace lexer {
             // a semantic error.
             if(nx->contains(nfas[i].accept))
                 error<SEMANTIC>(
-                    "Epsilon "
-                    "isn't a token!",
+                    "Token cannot be empty",
                     (int) (i + 1)
                 );
 
