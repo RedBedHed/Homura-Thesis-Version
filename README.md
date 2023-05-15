@@ -71,6 +71,21 @@ Algorithm 4&mdash; Huang's Alpha-Beta rollout algorithm&mdash; still relies on t
 
 Each node contains bounds 𝛼, 𝛽, 𝑉-, and 𝑉+. The search initializes 𝛼 and 𝑉- to negative infinity and 𝛽 and 𝑉+ to positive infinity.
 
+<ol>
+  <li>
+    <h3>Selection and Expansion</h3>
+The Selection step is intertwined with the Expansion step. At the beginning of a rollout, the search sends a depth-limited probe from the root node out into the tree, expanding as needed and selecting a child at each intermediate node. During each selection, the search filters children according to their 𝛼 and 𝛽 bounds which it updates using 𝑉-, 𝑉+, and the 𝛼 and 𝛽 of the current node.
+  </li>
+  <li>
+    <h3>Simulation</h3>
+In the Simulation step, the search evaluates the selected leaf node by quiescence search. It then sets Bounds 𝑉- and 𝑉+&mdash; and the score&mdash; to the value returned.
+  </li>
+  <li>
+    <h3>Backpropagation</h3>
+In the Backpropagation step, the search pushes 𝑉+, 𝑉-, and the score up the tree in the negamax style. Once 𝑉- ≥ 𝑉+ at a node, its score is accurate, and the search has seen everything it needs to see in the tree below. When 𝑉- ≥ 𝑉+ at the root, its score and principal variation are valid. The best move is the move on the principal variation.
+  </li>
+</ol>
+
 <p align="center">
   <image src="/Art/BackpropAB.png" ></image>
 </p>

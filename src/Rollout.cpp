@@ -395,7 +395,7 @@ namespace Homura {
 
                 /**
                  * If V- and V+ at the root
-                 * haven't converged, update
+                 * haven't crossed, update
                  * alpha and beta and do
                  * the next rollout at the
                  * same depth.
@@ -850,7 +850,7 @@ namespace Homura {
 
             /**
              * If the bounds of this
-             * child have converged,
+             * child have crossed,
              * skip it.
              */
             if(x->alpha >= x->beta)

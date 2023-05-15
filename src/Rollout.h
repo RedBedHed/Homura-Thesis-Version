@@ -341,11 +341,12 @@ namespace Homura {
         
         /**
          * A method to indicate whether the V-
-         * and V+ bounds have converged at this
-         * node.
+         * and V+ bounds have met at this node
+         * and the search has converged on the
+         * principal variation beneath.
          * 
          * @return whether the V- and V+ bounds
-         * have converged at this node.
+         * have crossed at this node.
          */
         [[nodiscard]]
         constexpr bool converged()
