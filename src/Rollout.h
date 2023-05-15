@@ -259,7 +259,7 @@ namespace Homura {
          */
         constexpr void setScore
         (const int32_t s)
-        { score = s; vminus = s; vplus = s; }
+        { score = vminus = vplus = s; }
 
         /**
          * A method to expose the current
