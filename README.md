@@ -22,7 +22,7 @@
 7. [Move Generation](https://github.com/RedBedHed/Homura/tree/main#move-generation)
 8. [UCI](https://github.com/RedBedHed/Homura/tree/main#uci)
 9. [Build Homura](https://github.com/RedBedHed/Homura/tree/main#build-homura)
-10. [Play Homura](https://github.com/RedBedHed/Homura/tree/main#play)
+10. [Play Homura](https://github.com/RedBedHed/Homura/tree/main#play-homura)
 
 ## Introduction
 
@@ -189,7 +189,7 @@ I developed Homura with a "Windows Subsystem for Linux" Ubuntu distribution on a
 
 You may build the project by cloning the repository, opening a Bash shell in the project directory, navigating to the src directory, and typing “make.” These steps assume you already have the compilation tools “clang++” and “make” installed.
 
-## Play against Homura
+## Play Homura
 
 To play against Homura, you must install a UCI-compatible Chess GUI such as “Cutechess." The infinite time control will give you unlimited time to make a move, and limit Homura to five seconds.
 
