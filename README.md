@@ -23,7 +23,6 @@
 8. [UCI](https://github.com/RedBedHed/Homura/tree/main#uci)
 9. [Build Homura](https://github.com/RedBedHed/Homura/tree/main#uci)
 10. [Play Homura](https://github.com/RedBedHed/Homura/tree/main#uci)
-11. 
 
 ## Introduction
 
