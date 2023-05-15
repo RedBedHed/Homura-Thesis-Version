@@ -53,8 +53,7 @@ namespace lexer {
     };
 
     /**
-     * A NFA or Regular Expression
-     * Graph is a data structure
+     * A NFA is a data structure
      * representing a simple (and
      * suboptimal) non-deterministic
      * finite automata.
@@ -118,7 +117,7 @@ namespace lexer {
         /**
          * A vector to hold the NFAs
          */
-        vector<NFA> regs;
+        vector<NFA> nfas;
 
         /**
          * A Vector to hold the tokens

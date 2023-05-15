@@ -64,8 +64,8 @@ namespace lexer {
             // portion of the
             // expression and
             // add its NFA to
-            // the regs list.
-            regs.push_back(A());
+            // the nfas list.
+            nfas.push_back(A());
 
             // Expect the beginning
             // quote of the TOKEN
@@ -688,7 +688,7 @@ namespace lexer {
 
         // Iterate through the NFAs.
         for(size_t i = 0;
-            i < regs.size(); ++i) {
+            i < nfas.size(); ++i) {
 
             // Fire up a new Node Set
             // on the heap.
@@ -698,13 +698,13 @@ namespace lexer {
             // Find the epsilon closure
             // of the start state. Store
             // this set in nx.
-            closeEpsilon(*nx, regs[i].start);
+            closeEpsilon(*nx, nfas[i].start);
 
             // If the accepting state is
             // reachable from the start
             // state on epsilon, we have
             // a semantic error.
-            if(nx->contains(regs[i].accept))
+            if(nx->contains(nfas[i].accept))
                 error<SEMANTIC>(
                     "Epsilon "
                     "isn't a token!",
@@ -854,7 +854,7 @@ namespace lexer {
 
     bool Analyzer::match() {
         const size_t
-        tokenCount = regs.size();
+        tokenCount = nfas.size();
 
         // Set aside a string to store
         // the match lexeme.
@@ -918,7 +918,7 @@ namespace lexer {
             // final state of the
             // ith NFA.
             const shared_ptr<Node>
-                a = regs[i].accept;
+                a = nfas[i].accept;
 
             // We won't ignore
             // whitespace while
