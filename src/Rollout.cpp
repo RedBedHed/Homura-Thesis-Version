@@ -368,6 +368,7 @@ namespace Homura {
             c.NODES = 0;
             c.Q_PLY = MaxDepth;
             c.ageHistory();
+            c.NULL_PLY = 0;
 
             /**
              * Main iterative deepening 
@@ -375,13 +376,6 @@ namespace Homura {
              */
             while(c.MAX_DEPTH < MaxDepth && 
                 !abort(time, c.epoch)) {
-                
-                /**
-                 * Set the ply at which
-                 * we will allow null-move
-                 * pruning. From Leorik.
-                 */
-                c.NULL_PLY = c.MAX_DEPTH >> 2U;
 
                 /**
                  * Do an alpha-beta rollout
@@ -421,6 +415,13 @@ namespace Homura {
                 << n->getScore()
                 << " nodes " 
                 << gc.getTotal() << '\n';
+
+                /**
+                 * Set the ply at which
+                 * we will allow null-move
+                 * pruning. From Leorik.
+                 */
+                c.NULL_PLY = c.MAX_DEPTH >> 2U;
                 
                 // std::cout << "info pv ";
                 // MemManager::printPV(n);
