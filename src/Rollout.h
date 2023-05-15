@@ -115,10 +115,14 @@ namespace Homura {
         head(nullptr), tail(head)
         {  }
 
-        constexpr NodeList(NodeList&&) = delete;
-        constexpr NodeList(const NodeList&) = delete;
-        constexpr NodeList& operator=(const NodeList&&) = delete;
-        constexpr NodeList& operator=(const NodeList&) = delete;
+        constexpr NodeList
+        (NodeList&&) = delete;
+        constexpr NodeList
+        (const NodeList&) = delete;
+        constexpr NodeList& operator=
+        (const NodeList&&) = delete;
+        constexpr NodeList& operator=
+        (const NodeList&) = delete;
 
         /**
          * A method to append a node
@@ -556,10 +560,14 @@ namespace Homura {
             }
         })) { }
 
-        constexpr MemManager(MemManager&&) = delete;
-        constexpr MemManager(const MemManager&) = delete;
-        constexpr MemManager& operator=(const MemManager&&) = delete;
-        constexpr MemManager& operator=(const MemManager&) = delete;
+        constexpr MemManager
+        (MemManager&&) = delete;
+        constexpr MemManager
+        (const MemManager&) = delete;
+        constexpr MemManager& operator=
+        (const MemManager&&) = delete;
+        constexpr MemManager& operator=
+        (const MemManager&) = delete;
 
         /**
          * A method to expose the total current
