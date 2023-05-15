@@ -13,17 +13,20 @@
 <h6 align="center"><i>"I'll do it over. No matter how many times it takes. I'll re-live it over and over again. I will find the way out... The one path that will save you from a destiny of despair." - Akemi Homura</i></h6>
 
 ## Index
-1. [Introduction](https://github.com/RedBedHed/Homura-MCAB/tree/rollout_ab#introduction)
-2. [Strength](https://github.com/RedBedHed/Homura-MCAB/tree/rollout_ab#strength)
-3. [Search](https://github.com/RedBedHed/Homura-MCAB/tree/rollout_ab#search)
-4. [Experimentation](https://github.com/RedBedHed/Homura-MCAB/tree/rollout_ab#experimentation-with-classical-mcts)
-5. [Algorithm 4](https://github.com/RedBedHed/Homura-MCAB/tree/rollout_ab#algorithm-4-by-dr-huang)
-6. [Search Techniques](https://github.com/RedBedHed/Homura-MCAB/tree/rollout_ab#search-techniques)
-7. [Move Generation](https://github.com/RedBedHed/Homura-MCAB/tree/rollout_ab#move-generation)
+1. [Introduction](https://github.com/RedBedHed/Homura/tree/main#introduction)
+2. [Strength](https://github.com/RedBedHed/Homura/tree/main#strength)
+3. [Search](https://github.com/RedBedHed/Homura/tree/main#search)
+4. [Experimentation](https://github.com/RedBedHed/Homura/tree/main#experimentation-with-classical-mcts)
+5. [Rollout Alpha-Beta](https://github.com/RedBedHed/Homura/tree/main#algorithm-4-by-dr-huang)
+6. [Search Techniques](https://github.com/RedBedHed/Homura/tree/main#search-techniques)
+7. [Move Generation](https://github.com/RedBedHed/Homura/tree/main#move-generation)
+8. [UCI](https://github.com/RedBedHed/Homura/tree/main#uci)
+9. [Build Homura](https://github.com/RedBedHed/Homura/tree/main#build-homura)
+10. [Play Homura](https://github.com/RedBedHed/Homura/tree/main#play-homura)
 
 ## Introduction
 
-Homura is a Chess Engine that I wrote from 2022-2023 as a branch of my move generator, Charon. As an full-time student (16 credit hours a semester), I made progress whenever and wherever I could&mdash; in campus libraries, coffee shops, on the bus, in bed. I read many papers and found inspiration in many engines, including Stockfish, Leela, Drofa, Scorpio, Fruit, CPW-Engine, Blunder, and Leorik. Homura derives from some of the ideas used in these engines&mdash; most notably Blunder and Leorik.
+Homura is a Chess Engine that I wrote from 2022-2023 as a branch of my move generator, Charon. As a full-time student (16 credit hours a semester), I made progress whenever and wherever I could&mdash; in campus libraries, coffee shops, on the bus, in bed. I read many papers and found inspiration in many engines, including Stockfish, Leela, Drofa, Scorpio, Fruit, CPW-Engine, Blunder, and Leorik. Homura derives from some of the ideas used in these engines&mdash; most notably Blunder and Leorik.
 
 ## Strength
 It is hard to say exactly how strong Homura is, as I ran out of time to implement the full UCI interface, and Homura only recognizes "movetime" or "infinite" time controls. After playing many games with Leorik-1.0 and Leorik-2.0, I believe that the elo might be somewhere between 2300 and 2550 at blitz chess. I also had the great privilege to intermediate a game between Homura and one of the top human players at my university. I am thrilled to be able to say that we won that game.
@@ -201,7 +204,7 @@ I developed Homura with a "Windows Subsystem for Linux" Ubuntu distribution on a
 
 You may build the project by cloning the repository, opening a Bash shell in the project directory, navigating to the src directory, and typing “make.” These steps assume you already have the compilation tools “clang++” and “make” installed.
 
-## Play against Homura
+## Play Homura
 
 To play against Homura, you must install a UCI-compatible Chess GUI such as “Cutechess." The infinite time control will give you unlimited time to make a move, and limit Homura to five seconds.
 
