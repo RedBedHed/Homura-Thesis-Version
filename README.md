@@ -21,8 +21,8 @@
 6. [Search Techniques](https://github.com/RedBedHed/Homura/tree/main#search-techniques)
 7. [Move Generation](https://github.com/RedBedHed/Homura/tree/main#move-generation)
 8. [UCI](https://github.com/RedBedHed/Homura/tree/main#uci)
-9. [Build Homura](https://github.com/RedBedHed/Homura/tree/main#uci)
-10. [Play Homura](https://github.com/RedBedHed/Homura/tree/main#uci)
+9. [Build Homura](https://github.com/RedBedHed/Homura/tree/main#build-homura)
+10. [Play Homura](https://github.com/RedBedHed/Homura/tree/main#play)
 
 ## Introduction
 
