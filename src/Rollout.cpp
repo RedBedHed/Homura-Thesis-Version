@@ -318,7 +318,8 @@ namespace Homura {
         ***
         *** <summary>
         *** <p>
-        *** An implementation of Huang's Iterative Deepening loop.
+        *** An implementation of Dr. Huang's Iterative Deepening 
+        *** loop.
         *** </p>
         ***
         *** <p>
@@ -579,7 +580,7 @@ namespace Homura {
             /**
              * Set re-search flag.
              */
-            flags |= 0x01U;
+            flags |= ReMask;
             return true;
         }
 
@@ -908,7 +909,7 @@ namespace Homura {
     ***
     *** <p>
     *** Homura backpropagates its bounds in the same way as 
-    *** Huang's Algorithm 4 and backpropagates the score in 
+    *** Dr. Huang's Algorithm 4 and backpropagates the score in 
     *** the minimax fashion, ignoring unvisited children.
     *** </p>
     *** </summary>
@@ -970,13 +971,14 @@ namespace Homura {
     ***
     *** <summary>
     *** <p>
-    *** After the selection and expansion steps are finished, 
-    *** a rollout algorithm enters the simulation step.
+    *** During a rollout, after the selection and expansion 
+    *** steps are finished, a rollout algorithm enters the 
+    *** simulation step.
     *** </p>
     ***
     *** <p>
-    *** Upon reaching its maximum depth durin a rollout, Homura 
-    *** performs simulation by evaluating with backtracking 
+    *** When Homura reaches its maximum depth during a rollout, 
+    *** it performs a simulation by evaluating with backtracking 
     *** quiescence search.
     *** </p>
     *** </summary>

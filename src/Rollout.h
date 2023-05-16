@@ -22,7 +22,13 @@ namespace Homura {
      * The terminal mask to extract a TermType
      * from flag bits.
      */
-    constexpr uint8_t  TermMask =    0x06U;    
+    constexpr uint8_t  TermMask =    0x06U; 
+
+    /**
+     * The re-search mask to extract a the
+     * re-search bit from the flag bits.
+     */
+    constexpr uint8_t  ReMask   =    0x01U;    
 
     /**
      * The maximum number of nodes.
@@ -351,7 +357,7 @@ namespace Homura {
          */
         [[nodiscard]]
         constexpr bool reSearch() 
-        { return flags & 0x01U; }
+        { return flags & ReMask; }
         
         /**
          * A method to indicate whether the V-
