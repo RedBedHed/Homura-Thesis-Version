@@ -34,7 +34,7 @@ It is hard to say exactly how strong Homura is, as I ran out of time to implemen
 ## Search
 Homura uses a hybrid search algorithm that combines Dr. Bojun Huang's [Alpha-Beta rollout](https://www.microsoft.com/en-us/research/wp-content/uploads/2014/11/huang_rollout.pdf) algorithm with the traditional backtracking Alpha-Beta. All PV nodes are searched via rollout, while the remaining nodes are searched with backtracking and a null window. The rollout portion of the algorithm probes the transposition table each time that it enters a node, and its tree policy is a combination of leftmost and greedy selection.
 
-Homura's algorithm&mdash; as a chimera of novel and classical algorithms&mdash; searches the game tree in a different and exciting way. It also seems to outperform my backtracking search in matches administered by cutechess-cli.
+Homura's algorithm&mdash; as a combination of novel and classical algorithms&mdash; searches the game tree in a different and exciting way. It also seems to outperform my backtracking search in matches administered by cutechess-cli.
 
 ## Experimentation With Classical MCTS
 
