@@ -423,8 +423,14 @@ namespace Homura {
          * at least one, as
          * we aren't in mate.
          */
-        for(State s;;) {
-            
+        do {
+
+            /**
+             * A state for move
+             * making.
+             */
+            State s;
+
             /**
              * The score of the
              * current move. 
@@ -507,7 +513,7 @@ namespace Homura {
                 !concern &&
                 (k - base) > lmpMargins[r]) {
                 b->retractMove(*k); 
-                goto loop_condition;
+                continue;
             }
 
             /**
@@ -515,7 +521,7 @@ namespace Homura {
              */
             if(!concern && futile) {
                 b->retractMove(*k);
-                goto loop_condition;
+                continue;
             }
 
             /**
@@ -623,7 +629,7 @@ namespace Homura {
              * continue.
              */
             if(score <= highScore) 
-                goto loop_condition;
+                continue;
 
             /**
              * update the high score.
@@ -642,7 +648,7 @@ namespace Homura {
             * alpha, continue.
             */
             if(score <= a) 
-                goto loop_condition;
+                continue;
 
             /**
              * Normal alpha-beta 
@@ -701,13 +707,7 @@ namespace Homura {
              * Set alpha.
              */
             a = score;
-
-            /**
-             * Loop condition.
-             */
-            loop_condition:
-            if(++k >= e) break;
-        }
+        } while(++k < e);
 
         /**
          * Cache this node's
