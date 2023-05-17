@@ -423,8 +423,19 @@ namespace Homura {
          * at least one, as
          * we aren't in mate.
          */
-        for(State s;;) { 
-            int32_t score;    
+        for(State s;;) {
+            
+            /**
+             * The score of the
+             * current move. 
+             */
+            int32_t score;  
+
+            /**
+             * R is the amount we will
+             * reduce the depth for LMR.
+             */
+            int R = 0;  
 
             /**
              * Do the move.
@@ -476,136 +487,129 @@ namespace Homura {
                     b, d + 1, r - 1,
                     -o, -a, c
                 );
-            } else {   
 
                 /**
-                 * Late Move Pruning.
-                 * Prunes moves that 
-                 * the move ordering
-                 * algorithm considers to
-                 * be undesirable.
+                 * Bypass null window
+                 * search and re-search.
                  */
-                if(r <= LMP_RD && 
-                    !pvNode &&
-                    !concern &&
-                    (k - base) > lmpMargins[r]) {
-                    b->retractMove(*k); 
+                goto scoring;
+            }   
 
-                    /**
-                     * Loop condition.
-                     */
-                    if(++k >= e) break; 
-                    continue;
-                }
+            /**
+             * Late Move Pruning.
+             * Prunes moves that 
+             * the move ordering
+             * algorithm considers to
+             * be undesirable.
+             */
+            if(r <= LMP_RD && 
+                !pvNode &&
+                !concern &&
+                (k - base) > lmpMargins[r]) {
+                b->retractMove(*k); 
+                goto loop_condition;
+            }
+
+            /**
+             * Futility Pruning.
+             */
+            if(!concern && futile) {
+                b->retractMove(*k);
+                goto loop_condition;
+            }
+
+            /**
+             * Late Move Reductions.
+             */
+            if(!concern && r >= LMR_RD) {
 
                 /**
-                 * Futility Pruning.
+                 * If this is a
+                 * pv node, reduce 
+                 * carefully. If not,
+                 * reduce a few plies
+                 * depending on the 
+                 * remaining depth and
+                 * the number of moves
+                 * we have seen so far.
                  */
-                if(!concern && futile) {
-                    b->retractMove(*k);
+                R = pvNode? 
+                    1 + (k - base) / 12: 
 
                     /**
-                     * Loop condition.
+                     * From Blunder.
                      */
-                    if(++k >= e) break; 
-                    continue;
-                }
+                    std::max(2, r / 4) + 
+                    (k - base) / 12;
 
                 /**
-                 * R is the amount we will
-                 * reduce the depth for LMR.
-                 */
-                int R = 0;
-
-                /**
-                 * Late Move Reductions.
-                 */
-                if(!concern && r >= LMR_RD) {
-
-                    /**
-                     * If this is a
-                     * pv node, reduce 
-                     * carefully. If not,
-                     * reduce a few plies
-                     * depending on the 
-                     * remaining depth and
-                     * the number of moves
-                     * we have seen so far.
-                     */
-                    R = pvNode? 
-                        1 + (k - base) / 12: 
-
-                        /**
-                         * From Blunder.
-                         */
-                        std::max(2, r / 4) + 
-                        (k - base) / 12;
-
-                    /**
-                     * Try out the 
-                     * reduced-depth
-                     * search. If it
-                     * doesn't raise
-                     * alpha, there is
-                     * no need to 
-                     * re-search.
-                     */
-                    score = 
-                    -alphaBeta<~A, NONPV, true>
-                    (
-                        b, d + 1,
-                        r - 1 - R, 
-                        -a - 1, -a, c
-                    );
-
-                    /**
-                     * If we haven't
-                     * managed to 
-                     * raise alpha,
-                     * don't re-search.
-                     */                        
-                    if(score <= a) {
-                        goto scoring;
-                    }
-
-                    /**
-                     * If the score is
-                     * greater than alpha,
-                     * try again at full
-                     * depth.
-                     */
-                }
-
-                /**
-                 * Search at full depth
-                 * with null window.
+                 * Try out the 
+                 * reduced-depth
+                 * search. If it
+                 * doesn't raise
+                 * alpha, there is
+                 * no need to 
+                 * re-search.
                  */
                 score = 
                 -alphaBeta<~A, NONPV, true>
                 (
                     b, d + 1,
-                    r - 1, 
+                    r - 1 - R, 
                     -a - 1, -a, c
                 );
-                
-                /** 
-                 * If our search
-                 * lands within the
-                 * full window,
-                 * re-search with 
-                 * the full window.
+
+                /**
+                 * If we haven't
+                 * managed to 
+                 * raise alpha,
+                 * don't re-search.
+                 */                        
+                if(score <= a) {
+                    goto scoring;
+                }
+
+                /**
+                 * If the score is
+                 * greater than alpha,
+                 * try again at full
+                 * depth.
                  */
-                if((score > a && (R > 0 || 
-                NT == ROOT || score < o))) {
-                    score = 
-                    -alphaBeta<~A, _N, true>
-                    (
-                        b, d + 1, r - 1,
-                        -o, -a, c
-                    );
-                } 
             }
 
+            /**
+             * Search at full depth
+             * with null window.
+             */
+            score = 
+            -alphaBeta<~A, NONPV, true>
+            (
+                b, d + 1,
+                r - 1, 
+                -a - 1, -a, c
+            );
+            
+            /** 
+             * If our search
+             * lands within the
+             * full window,
+             * re-search with 
+             * the full window.
+             */
+            if((score > a && (R > 0 || 
+            NT == ROOT || score < o))) {
+                score = 
+                -alphaBeta<~A, _N, true>
+                (
+                    b, d + 1, r - 1,
+                    -o, -a, c
+                );
+            } 
+
+            /**
+             * See if this move's 
+             * score is significant.
+             */
             scoring:
 
             /**
@@ -614,20 +618,31 @@ namespace Homura {
             b->retractMove(*k);  
 
             /**
+             * If we fail to raise
+             * the high score, 
+             * continue.
+             */
+            if(score <= highScore) 
+                goto loop_condition;
+
+            /**
              * update the high score.
              * set the move for the
              * transposition table.
              */
-            if(score > highScore) {
-                highScore = score;
-                if constexpr (NT == IID) {
-                    c->iidMoves[d] = *k;
-                }
-                if constexpr (NT == ROOT) {
-                    c->bestMove = *k;
-                }
-                hm = *k;
-            }
+            highScore = score;
+            if constexpr (NT == IID)
+                c->iidMoves[d] = *k;
+            if constexpr (NT == ROOT)
+                c->bestMove = *k;
+            hm = *k;
+
+           /*
+            * If we fail to raise
+            * alpha, continue.
+            */
+            if(score <= a) 
+                goto loop_condition;
 
             /**
              * Normal alpha-beta 
@@ -659,43 +674,38 @@ namespace Homura {
                 c->addKiller(d, *k);
                 break;
             }
-            
-            /*
-             * If we raise alpha...
+
+            /**
+             * If the move isn't
+             * an attack, raise
+             * the history by
+             * a little bit.
+             * We want to prefer
+             * moves that raise
+             * alpha (just not
+             * quite as much as
+             * we want to prefer
+             * moves that cause
+             * a beta-cutoff).
              */
-            if(score > a) {
-
-                /**
-                 * If the move isn't
-                 * an attack, raise
-                 * the history by
-                 * a little bit.
-                 * We want to prefer
-                 * moves that raise
-                 * alpha (just not
-                 * quite as much as
-                 * we want to prefer
-                 * moves that cause
-                 * a beta-cutoff).
-                 */
-                if(!isAttack) {
-                    c->raiseHistory<A>
-                    (
-                        k->origin(),
-                        k->destination(), 
-                        r
-                    );
-                }
-
-                /**
-                 * Set alpha.
-                 */
-                a = score;
+            if(!isAttack) {
+                c->raiseHistory<A>
+                (
+                    k->origin(),
+                    k->destination(), 
+                    r
+                );
             }
+
+            /**
+             * Set alpha.
+             */
+            a = score;
 
             /**
              * Loop condition.
              */
+            loop_condition:
             if(++k >= e) break;
         }
 
