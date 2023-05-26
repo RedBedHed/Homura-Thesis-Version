@@ -950,9 +950,9 @@ namespace Homura {
              * ignoring the scores of
              * unvisited children.
              */
-            const int32_t l = -x->score;
-            if(-l != INT32_MIN && l > maxScore) {
-                maxScore = l; currentPVNode = x;
+            const int32_t l = x->score;
+            if(l != INT32_MIN && -l > maxScore) {
+                maxScore = -l; currentPVNode = x;
             }
         }
 
