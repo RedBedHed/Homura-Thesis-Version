@@ -204,6 +204,8 @@ I developed Homura with a "Windows Subsystem for Linux" Ubuntu distribution on a
 
 You may build the project by cloning the repository, opening a Bash shell in the project directory, navigating to the src directory, and typing “make.” These steps assume you already have the compilation tools “clang++” and “make” installed.
 
+To run the executable file, you must include the "ospec.txt" file in the executable file's directory. The "ospec.txt" file is needed for the lexical analyzer to correctly lex the supported UCI commands.
+
 ## Play Homura
 
 To play against Homura, you must install a UCI-compatible Chess GUI such as “Cutechess." The infinite time control will give you unlimited time to make a move, and limit Homura to five seconds.
